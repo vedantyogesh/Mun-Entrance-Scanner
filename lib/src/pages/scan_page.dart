@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 
 class ScanScreen extends StatefulWidget {
   final String eventOps;
+
   ScanScreen({this.eventOps});
 
   @override
@@ -22,10 +23,9 @@ class _ScanState extends State<ScanScreen> {
     print(widget.eventOps);
     super.initState();
   }
-  Widget buildSnackBar(){
-    return SnackBar(
-      
-    );
+
+  Widget buildSnackBar() {
+    return SnackBar();
   }
 
   @override
@@ -62,11 +62,11 @@ class _ScanState extends State<ScanScreen> {
 
   Future scan() async {
     try {
-      String barcode = await BarcodeScanner.scan();
-      print(barcode);
+      String barCode = await BarcodeScanner.scan();
+      print(barCode);
       print(widget.eventOps);
       //setState(() => this.barcode = barcode);
-      var resp = await postreq(barcode, widget.eventOps);
+      var resp = await postreq(barCode, widget.eventOps);
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
@@ -83,26 +83,19 @@ class _ScanState extends State<ScanScreen> {
     }
   }
 
-  Future<http.Response> postreq(String qrcode, String eventname) async {
+  Future<http.Response> postreq(String qrCode, String eventName) async {
     String url = 'https://munqr.herokuapp.com/verify-qr?qr=' +
-        qrcode +
+        qrCode +
         '&eventName=' +
-        eventname;
+        eventName;
     print("1" + url);
 
-    // Map<String, dynamic> Body = {'qr': qrcode, 'eventName': eventname};
-    // http
-    //     .post(
-    //   Uri.encodeFull(url),
-    //   headers: {"Content-Type": "application/json"},
-    //   body: Body,
-    // )
     print("in here");
     http.post(Uri.encodeFull(url)).then((http.Response resp) {
       print(resp.body);
       int data = jsonDecode(resp.body)["response"];
-      if(data == 0){}
-      print(data);
+      if (data == 0) {}
+      print(data.runtimeType.toString());
       return data;
     });
   }

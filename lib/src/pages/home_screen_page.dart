@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './scan.dart';
+import 'package:muncode/src/pages/scan_page.dart';
 import 'package:flutter/rendering.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,7 +8,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var eventOps = '';
+  String eventOps = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
