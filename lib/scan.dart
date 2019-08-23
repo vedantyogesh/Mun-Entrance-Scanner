@@ -19,7 +19,13 @@ class _ScanState extends State<ScanScreen> {
 
   @override
   initState() {
+    print(widget.eventOps);
     super.initState();
+  }
+  Widget buildSnackBar(){
+    return SnackBar(
+      
+    );
   }
 
   @override
@@ -57,9 +63,10 @@ class _ScanState extends State<ScanScreen> {
   Future scan() async {
     try {
       String barcode = await BarcodeScanner.scan();
-      print("debug:check");
-      setState(() => this.barcode = barcode);
-      http.Response resp = await postreq(barcode, widget.eventOps);
+      print(barcode);
+      print(widget.eventOps);
+      //setState(() => this.barcode = barcode);
+      var resp = await postreq(barcode, widget.eventOps);
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
@@ -72,23 +79,31 @@ class _ScanState extends State<ScanScreen> {
       setState(() => this.barcode =
           'null (User returned using the "back"-button before scanning anything. Result)');
     } catch (e) {
-      setState(() => this.barcode = 'Unknown error: $e');
+      setState(() => this.barcode = 'Unknown e: $e');
     }
   }
 
   Future<http.Response> postreq(String qrcode, String eventname) async {
-    String url = 'https://mujmun.in/verify-qr';
+    String url = 'https://munqr.herokuapp.com/verify-qr?qr=' +
+        qrcode +
+        '&eventName=' +
+        eventname;
+    print("1" + url);
 
-    Map<String, dynamic> Body = {'qr': qrcode, 'eventName': eventname};
-    http
-        .post(
-      Uri.encodeFull(url),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(Body),
-    )
-        .then((http.Response resp) {
+    // Map<String, dynamic> Body = {'qr': qrcode, 'eventName': eventname};
+    // http
+    //     .post(
+    //   Uri.encodeFull(url),
+    //   headers: {"Content-Type": "application/json"},
+    //   body: Body,
+    // )
+    print("in here");
+    http.post(Uri.encodeFull(url)).then((http.Response resp) {
       print(resp.body);
-      return resp;
+      int data = jsonDecode(resp.body)["response"];
+      if(data == 0){}
+      print(data);
+      return data;
     });
   }
 }

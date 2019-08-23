@@ -29,12 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 splashColor: Colors.blueGrey,
                 onPressed: () {
                   eventOps = 'a';
-                  ScanScreen(
-                    eventOps: eventOps,
-                  );
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ScanScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => ScanScreen(eventOps: eventOps)),
                   );
                 },
                 child: const Text('Option A')),
@@ -47,12 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 splashColor: Colors.blueGrey,
                 onPressed: () {
                   eventOps = 'b';
-                  ScanScreen(
-                    eventOps: eventOps,
-                  );
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ScanScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => ScanScreen(eventOps: eventOps)),
                   );
                 },
                 child: const Text('Option B')),
@@ -65,12 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 splashColor: Colors.blueGrey,
                 onPressed: () {
                   eventOps = 'c';
-                  ScanScreen(
-                    eventOps: eventOps,
-                  );
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ScanScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => ScanScreen(eventOps: eventOps)),
                   );
                 },
                 child: const Text('Option C')),
@@ -83,12 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 splashColor: Colors.blueGrey,
                 onPressed: () {
                   eventOps = 'd';
-                  ScanScreen(
-                    eventOps: eventOps,
-                  );
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ScanScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => ScanScreen(eventOps: eventOps)),
                   );
                 },
                 child: const Text('Option D')),
