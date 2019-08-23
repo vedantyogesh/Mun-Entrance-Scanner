@@ -8,6 +8,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Widget buildRaisedButton(String val, String value) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 25.0),
+      child: RaisedButton(
+          color: Colors.teal,
+          textColor: Colors.white,
+          splashColor: Colors.blueGrey,
+          onPressed: () {
+            eventOps = val;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ScanScreen(eventOps: eventOps)),
+            );
+          },
+          child: Text(value)),
+    );
+  }
+
   var eventOps = '';
   @override
   Widget build(BuildContext context) {
@@ -17,74 +36,17 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('MUN QR Code Scanner'),
       ),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: ListView(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 25.0),
-            child: RaisedButton(
-                color: Colors.teal,
-                textColor: Colors.white,
-                splashColor: Colors.blueGrey,
-                onPressed: () {
-                  eventOps = 'a';
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ScanScreen(eventOps: eventOps)),
-                  );
-                },
-                child: const Text('Option A')),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 25.0),
-            child: RaisedButton(
-                color: Colors.teal,
-                textColor: Colors.white,
-                splashColor: Colors.blueGrey,
-                onPressed: () {
-                  eventOps = 'b';
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ScanScreen(eventOps: eventOps)),
-                  );
-                },
-                child: const Text('Option B')),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 25.0),
-            child: RaisedButton(
-                color: Colors.teal,
-                textColor: Colors.white,
-                splashColor: Colors.blueGrey,
-                onPressed: () {
-                  eventOps = 'c';
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ScanScreen(eventOps: eventOps)),
-                  );
-                },
-                child: const Text('Option C')),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 25.0),
-            child: RaisedButton(
-                color: Colors.teal,
-                textColor: Colors.white,
-                splashColor: Colors.blueGrey,
-                onPressed: () {
-                  eventOps = 'd';
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ScanScreen(eventOps: eventOps)),
-                  );
-                },
-                child: const Text('Option D')),
-          ),
+          buildRaisedButton('a', 'Registration'),
+          buildRaisedButton('b', 'Breakfast-1'),
+          buildRaisedButton('c', 'Lunch-1'),
+          buildRaisedButton('d', 'Hi-Tea-1'),
+          buildRaisedButton('e', 'Gala dinner'),
+          buildRaisedButton('f', 'Breakfast-2'),
+          buildRaisedButton('g', 'Lunch-2'),
+          buildRaisedButton('h', 'Hi-Tea-2'),
+          buildRaisedButton('i', 'Ball entry')
         ],
       )),
     );

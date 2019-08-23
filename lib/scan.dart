@@ -15,6 +15,7 @@ class ScanScreen extends StatefulWidget {
 }
 
 class _ScanState extends State<ScanScreen> {
+  final GlobalKey<ScaffoldState> _key = new GlobalKey<ScaffoldState>();
   String barcode = "";
 
   @override
@@ -22,15 +23,21 @@ class _ScanState extends State<ScanScreen> {
     print(widget.eventOps);
     super.initState();
   }
-  Widget buildSnackBar(){
-    return SnackBar(
-      
+
+  _buildSnackBar(String val) {
+    print('Working');
+    final snackBar = SnackBar(
+      content: Text(val),
+      backgroundColor: Colors.teal,
+      duration: Duration(seconds: 1),
     );
+    _key.currentState.showSnackBar(snackBar);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _key,
         appBar: AppBar(
           title: Text('QR Code Scanner'),
         ),
@@ -39,22 +46,30 @@ class _ScanState extends State<ScanScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: RaisedButton(
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    splashColor: Colors.blueGrey,
-                    onPressed: scan,
-                    child: const Text('START CAMERA SCAN')),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Text(
-                  barcode,
-                  textAlign: TextAlign.center,
+              Container(
+                margin: EdgeInsets.all(50),
+                child: FloatingActionButton.extended(
+                  label: Text('Scan'),
+                  icon: Icon(Icons.camera),
+                  onPressed: scan,
                 ),
               ),
+              // Padding(
+              //   padding: EdgeInsets.all(10),
+              //   child: RaisedButton(
+              //       color: Colors.blue,
+              //       textColor: Colors.white,
+              //       splashColor: Colors.blueGrey,
+              //       onPressed: _buildSnackBar,
+              //       child: const Text('START CAMERA SCAN')),
+              // ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              //   child: Text(
+              //     barcode,
+              //     textAlign: TextAlign.center,
+              //   ),
+              // ),
             ],
           ),
         ));
@@ -101,7 +116,11 @@ class _ScanState extends State<ScanScreen> {
     http.post(Uri.encodeFull(url)).then((http.Response resp) {
       print(resp.body);
       int data = jsonDecode(resp.body)["response"];
-      if(data == 0){}
+      if (data == 0)
+        _buildSnackBar('Not Registerd');
+      else if (data == 1)
+        _buildSnackBar('Success');
+      else if (data == 2) _buildSnackBar('Repeated');
       print(data);
       return data;
     });
