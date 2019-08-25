@@ -24,11 +24,11 @@ class _ScanState extends State<ScanScreen> {
     super.initState();
   }
 
-  _buildSnackBar(String val) {
+  _buildSnackBar(String val, Color color) {
     print('Working');
     final snackBar = SnackBar(
       content: Text(val),
-      backgroundColor: Colors.teal,
+      backgroundColor: color,
       duration: Duration(seconds: 1),
     );
     _key.currentState.showSnackBar(snackBar);
@@ -54,22 +54,6 @@ class _ScanState extends State<ScanScreen> {
                   onPressed: scan,
                 ),
               ),
-              // Padding(
-              //   padding: EdgeInsets.all(10),
-              //   child: RaisedButton(
-              //       color: Colors.blue,
-              //       textColor: Colors.white,
-              //       splashColor: Colors.blueGrey,
-              //       onPressed: _buildSnackBar,
-              //       child: const Text('START CAMERA SCAN')),
-              // ),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              //   child: Text(
-              //     barcode,
-              //     textAlign: TextAlign.center,
-              //   ),
-              // ),
             ],
           ),
         ));
@@ -99,28 +83,20 @@ class _ScanState extends State<ScanScreen> {
   }
 
   Future<http.Response> postreq(String qrcode, String eventname) async {
-    String url = 'https://munqr.herokuapp.com/verify-qr?qr=' +
+    String url = 'https://munqr.herokuapp.com/verify-qr/?qr=' +
         qrcode +
         '&eventName=' +
         eventname;
     print("1" + url);
-
-    // Map<String, dynamic> Body = {'qr': qrcode, 'eventName': eventname};
-    // http
-    //     .post(
-    //   Uri.encodeFull(url),
-    //   headers: {"Content-Type": "application/json"},
-    //   body: Body,
-    // )
     print("in here");
     http.post(Uri.encodeFull(url)).then((http.Response resp) {
       print(resp.body);
       int data = jsonDecode(resp.body)["response"];
       if (data == 0)
-        _buildSnackBar('Not Registerd');
+        _buildSnackBar('Not Registerd', Colors.red);
       else if (data == 1)
-        _buildSnackBar('Success');
-      else if (data == 2) _buildSnackBar('Repeated');
+        _buildSnackBar('Success', Colors.green);
+      else if (data == 2) _buildSnackBar('Repeated', Colors.blue);
       print(data);
       return data;
     });

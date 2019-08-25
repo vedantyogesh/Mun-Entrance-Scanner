@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  var eventOps = '';
+  Str eventOps = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
           child: ListView(
         children: <Widget>[
-          buildRaisedButton('a', 'Registration'),
+          buildRaisedButton('registeration', 'Registration'),
           buildRaisedButton('b', 'Breakfast-1'),
           buildRaisedButton('c', 'Lunch-1'),
           buildRaisedButton('d', 'Hi-Tea-1'),
