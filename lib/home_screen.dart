@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Str eventOps = '';
+  String eventOps = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
